@@ -23,7 +23,7 @@ public class QueryExecutor {
             Class.forName(jdbc_driver);
             queryExecutorResponse.setConnection(DriverManager.getConnection(db_url, username, password));
             queryExecutorResponse.setStatement((queryExecutorResponse.getConnection().createStatement()));
-            query = "select * from USER";
+            //query = "select * from USER";
             queryExecutorResponse.setResultSet(queryExecutorResponse.getStatement().executeQuery(query));
         }
         catch (Exception exception) {

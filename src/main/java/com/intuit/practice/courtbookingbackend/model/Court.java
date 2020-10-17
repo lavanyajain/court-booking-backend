@@ -1,52 +1,39 @@
 package com.intuit.practice.courtbookingbackend.model;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-
 public class Court {
-    private Long id;
-    private String name;
-    private String city;
-    private String country;
-    private String type;
+    private String courtName;
+    private Integer min;
+    private Integer max;
 
-    public Long getId() {
-        return id;
+    public Court() {}
+
+    public Court(String courtName, int min, int max) {
+        this.courtName = courtName;
+        this.min = min;
+        this.max = max;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public String getCourtName() {
+        return courtName;
     }
 
-    public String getName() {
-        return name;
+    public void setCourtName(String courtName) {
+        this.courtName = courtName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public Integer getMin() {
+        return min;
     }
 
-    public String getCity() {
-        return city;
+    public void setMin(Integer min) {
+        this.min = min;
     }
 
-    public void setCity(String city) {
-        this.city = city;
+    public Integer getMax() {
+        return max;
     }
 
-    public String getCountry() {
-        return country;
-    }
-
-    public void setCountry(String country) {
-        this.country = country;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
+    public void setMax(Integer max) {
+        this.max = max;
     }
 }

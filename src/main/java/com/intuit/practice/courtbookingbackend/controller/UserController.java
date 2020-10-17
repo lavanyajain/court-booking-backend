@@ -1,9 +1,6 @@
 package com.intuit.practice.courtbookingbackend.controller;
 
-import com.intuit.practice.courtbookingbackend.exception.GetUsersFailedException;
 import com.intuit.practice.courtbookingbackend.exception.UserNotFoundException;
-import com.intuit.practice.courtbookingbackend.model.UserResponse;
-import com.intuit.practice.courtbookingbackend.model.UsersResponse;
 import com.intuit.practice.courtbookingbackend.services.UsersServices;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,8 +13,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.sql.SQLException;
-
 import static com.intuit.practice.courtbookingbackend.config.ConfigurationData.FAILURE_STATUS;
 
 @Controller
@@ -25,7 +20,7 @@ import static com.intuit.practice.courtbookingbackend.config.ConfigurationData.F
 @RequestMapping("/api")
 public class UserController {
 
-    private static final Logger logger = LoggerFactory.getLogger(UserController.class);
+    /*private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 
     @Autowired
     private UsersServices services;
@@ -60,5 +55,5 @@ public class UserController {
             logger.error("Error while executing SQL query {}", exception.getMessage());
             return new ResponseEntity<>(new UserResponse(exception.getMessage(), FAILURE_STATUS, null), HttpStatus.INTERNAL_SERVER_ERROR);
         }
-    }
+    }**/
 }

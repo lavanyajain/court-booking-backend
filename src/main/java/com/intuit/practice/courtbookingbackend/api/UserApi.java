@@ -3,8 +3,6 @@ package com.intuit.practice.courtbookingbackend.api;
 import com.intuit.practice.courtbookingbackend.exception.GetUsersFailedException;
 import com.intuit.practice.courtbookingbackend.exception.UserNotFoundException;
 import com.intuit.practice.courtbookingbackend.library.QueryExecutor;
-import com.intuit.practice.courtbookingbackend.model.QueryExecutorResponse;
-import com.intuit.practice.courtbookingbackend.model.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -16,7 +14,7 @@ import java.util.List;
 
 @Component
 public class UserApi {
-    @Value("${court.booking.database.driver}")
+   /* @Value("${court.booking.database.driver}")
     private String JDBC_DRIVER;
 
     @Value("${court.booking.database.url}")
@@ -97,5 +95,5 @@ public class UserApi {
             throw new UserNotFoundException("Cannot not find entry for user in Registered users list");
         }
      return user;
-    }
+    }**/
 }

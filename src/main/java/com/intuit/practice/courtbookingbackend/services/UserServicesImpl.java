@@ -3,9 +3,6 @@ package com.intuit.practice.courtbookingbackend.services;
 import com.intuit.practice.courtbookingbackend.api.UserApi;
 import com.intuit.practice.courtbookingbackend.exception.QueryExecutionException;
 import com.intuit.practice.courtbookingbackend.exception.UserNotFoundException;
-import com.intuit.practice.courtbookingbackend.model.User;
-import com.intuit.practice.courtbookingbackend.model.UserResponse;
-import com.intuit.practice.courtbookingbackend.model.UsersResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,7 +11,7 @@ import static com.intuit.practice.courtbookingbackend.config.ConfigurationData.S
 
 @Service
 public class UserServicesImpl implements UsersServices {
-
+/*
     @Autowired
     private UserApi userApi;
 
@@ -44,5 +41,5 @@ public class UserServicesImpl implements UsersServices {
             throw new QueryExecutionException("Error while fetching all users data");
         }
         return userResponse;
-    }
+    }**/
 }
