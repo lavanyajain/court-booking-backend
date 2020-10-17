@@ -1,7 +1,10 @@
 package com.intuit.practice.courtbookingbackend.api;
 
+import com.intuit.practice.courtbookingbackend.exception.GetCourtsFailedException;
+import com.intuit.practice.courtbookingbackend.exception.QueryExecutionException;
 import com.intuit.practice.courtbookingbackend.library.QueryExecutor;
 import com.intuit.practice.courtbookingbackend.model.*;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -12,7 +15,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Set;
 
 @Component
 public class CourtApi {
@@ -32,17 +34,28 @@ public class CourtApi {
 
     private QueryExecutor queryExecutor = new QueryExecutor();
 
-    private String sql;
-
+    private ResultSet getEntriesOfCourtTable() {
+        String sqlQuery = "select * from court";
+        QueryExecutorResponse queryExecutorResponse;
+        try {
+            queryExecutorResponse = queryExecutor.executeQuery(JDBC_DRIVER, DB_URL, USER_NAME, PASSWORD, sqlQuery);
+        }
+        catch (QueryExecutionException exception) {
+            logger.error("Error while fetching available courts form DB validate DB configuration");
+            throw new QueryExecutionException(exception.getMessage());
+        }
+        catch(Exception exception) {
+            logger.error("Execution failed with {} error", exception.getMessage());
+            throw new GetCourtsFailedException(exception.getMessage());
+        }
+        return queryExecutorResponse.getResultSet();
+    }
 
     public HashMap<String,HashMap<String, List<Court>>> getCourtsByCity() throws SQLException {
-        sql = "select * from court";
         String city, game;
         Court court;
-        HashMap<String, List<Court>> cityList;
         List<Court> courtList = new ArrayList<>();
-        QueryExecutorResponse response = queryExecutor.executeQuery(JDBC_DRIVER, DB_URL, USER_NAME, PASSWORD, sql);
-        ResultSet resultSet = response.getResultSet();
+        ResultSet resultSet = getEntriesOfCourtTable();
         HashMap<String, HashMap<String, List<Court>>> courts = new HashMap<>();
         while (resultSet.next()) {
             city = resultSet.getString("city");
@@ -52,66 +65,16 @@ public class CourtApi {
                 HashMap<String, List<Court>> hashMap = new HashMap<>();
                 courts.put(city, hashMap);
             }
-            HashMap<String, List<Court>> hashMap = courts.get(city);
-            if(!hashMap.containsKey(game)) {
-              hashMap.put(game, new ArrayList<>());
+            HashMap<String, List<Court>> courtsEntry = courts.get(city);
+            if(!courtsEntry.containsKey(game)) {
+              courtsEntry.put(game, new ArrayList<>());
             }
-            List<Court> c = hashMap.get(game);
+            List<Court> c = courtsEntry.get(game);
             c.add(court);
-            hashMap.put(game, c);
-            courts.put(city, hashMap);
-            //for(String key: hashMap.keySet()) {
-            //    List<Court> c = hashMap.get(key);
-           // }
-            //courts.put(city, )
-
-
+            courtsEntry.put(game, c);
+            courts.put(city, courtsEntry);
             courtList.add(court);
-            //courts.put(city, courtList);
         }
-
     return courts;
-    }
-
-    public HashMap<String, HashMap<String, List<Court>>> getAllCourts() throws SQLException {
-        getCourtsByCity();
-        sql = "select * from court";
-        QueryExecutorResponse response = queryExecutor.executeQuery(JDBC_DRIVER, DB_URL, USER_NAME, PASSWORD, sql);
-        ResultSet resultSet = response.getResultSet();
-        List<Court> courtList;
-        Court court;
-        String game;
-        String city;
-        HashMap<String, HashMap<String,List<Court>>> citySet = new HashMap<>();
-
-
-        while (resultSet.next()) {
-            city = resultSet.getString("city");
-            sql = "select * from court where city='" + city + "';";
-            QueryExecutorResponse response1 = queryExecutor.executeQuery(JDBC_DRIVER, DB_URL, USER_NAME, PASSWORD, sql);
-            ResultSet resultSet1 = response1.getResultSet();
-            HashMap<String, List<Court>> gameSet = new HashMap<>();
-            while (resultSet1.next()) {
-                game = resultSet1.getString("game");
-                sql = "select * from court where game='" + game + "' AND city='"+ city + "';";
-                QueryExecutorResponse response2 = queryExecutor.executeQuery(JDBC_DRIVER, DB_URL, USER_NAME, PASSWORD, sql);
-                ResultSet resultSet2 = response2.getResultSet();
-                courtList = new ArrayList<>();
-                while (resultSet2.next()) {
-                    court = new Court();
-                    court.setMax(resultSet2.getInt("max_cost"));
-                    court.setMin(resultSet2.getInt("min_cost"));
-                    court.setCourtName(resultSet2.getString("name"));
-                    courtList.add(court);
-                }
-                gameSet.put(game, courtList);
-            }
-
-            citySet.put(city, gameSet);
-
-        }
-
-        //return cityCourts1;
-        return citySet;
     }
 }

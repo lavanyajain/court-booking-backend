@@ -6,5 +6,5 @@ import java.util.HashMap;
 import java.util.List;
 
 public interface CourtServices {
-    public HashMap<String, HashMap<String, List<Court>>> getAllCourts();
+    HashMap<String, HashMap<String, List<Court>>> getAllCourts();
 }
