@@ -13,6 +13,7 @@ import org.springframework.stereotype.Component;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Time;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -61,13 +62,14 @@ public class SlotApi {
         while (resultSet.next()) {
             Timestamp startTime = resultSet.getTimestamp("start_time");
             Timestamp endTime = resultSet.getTimestamp("end_time");
-            String slotDate = sdf.format(new Date(startTime.getTime())).substring(0,10);
+            String slotDate = new Date(startTime.getTime()).toString().substring(0,10);
             if(startTime.compareTo(new Timestamp(System.currentTimeMillis())) > 0) {
                 if(!slotsAvailable.containsKey(slotDate))
                     slotsAvailable.put(slotDate, new ArrayList<>());
-                String start = sdf.format(startTime);
-                String end = sdf.format(endTime);
-                slots.add(new SlotModal(start.substring(11), end.substring(11)));
+                slots = slotsAvailable.get(slotDate);
+                String start = new Time(startTime.getTime()).toString();
+                String end = new Time(endTime.getTime()).toString();
+                slots.add(new SlotModal(start, end));
             }
             slotsAvailable.put(slotDate, slots);
         }
