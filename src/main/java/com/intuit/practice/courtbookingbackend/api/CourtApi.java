@@ -60,7 +60,7 @@ public class CourtApi {
         while (resultSet.next()) {
             city = resultSet.getString("city");
             game = resultSet.getString("game");
-            court = new Court(resultSet.getString("name"), resultSet.getInt("min_cost"), resultSet.getInt("max_cost"), resultSet.getString("game"));
+            court = new Court(resultSet.getString("name"), resultSet.getInt("min_cost"), resultSet.getInt("max_cost"));
             if(!courts.containsKey(city)) {
                 HashMap<String, List<Court>> hashMap = new HashMap<>();
                 courts.put(city, hashMap);

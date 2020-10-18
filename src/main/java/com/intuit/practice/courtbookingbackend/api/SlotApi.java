@@ -1,0 +1,76 @@
+package com.intuit.practice.courtbookingbackend.api;
+
+import com.intuit.practice.courtbookingbackend.exception.GetSlotsFailedException;
+import com.intuit.practice.courtbookingbackend.exception.QueryExecutionException;
+import com.intuit.practice.courtbookingbackend.library.QueryExecutor;
+import com.intuit.practice.courtbookingbackend.model.QueryExecutorResponse;
+import com.intuit.practice.courtbookingbackend.model.SlotModal;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.util.*;
+
+@Component
+public class SlotApi {
+    @Value("${court.booking.database.driver}")
+    private String JDBC_DRIVER;
+
+    @Value("${court.booking.database.url}")
+    private String DB_URL;
+
+    @Value("${court.booking.database.username}")
+    private String USER_NAME;
+
+    @Value("${court.booking.database.password}")
+    private String PASSWORD;
+
+    private static final Logger logger = LoggerFactory.getLogger(SlotApi.class);
+
+    private QueryExecutor queryExecutor = new QueryExecutor();
+
+    private ResultSet getAllAvailableSlots(Integer courtId) {
+        String sqlQuery = "select * from slots where court_id=" + courtId + " AND status='Available';";
+        QueryExecutorResponse queryExecutorResponse;
+        try {
+            queryExecutorResponse = queryExecutor.executeQuery(JDBC_DRIVER, DB_URL, USER_NAME, PASSWORD, sqlQuery);
+        }
+        catch (QueryExecutionException exception) {
+            logger.error("Error while fetching available courts form DB validate DB configuration");
+            throw new QueryExecutionException(exception.getMessage());
+        }
+        catch(Exception exception) {
+            logger.error("Execution failed with {} error", exception.getMessage());
+            throw new GetSlotsFailedException(exception.getMessage());
+        }
+        return queryExecutorResponse.getResultSet();
+    }
+
+    public HashMap<String, List<SlotModal>> getSlotByCourtId(Integer courtId) throws SQLException {
+        ResultSet resultSet = getAllAvailableSlots(courtId);
+        HashMap<String, List<SlotModal>> slotsAvailable = new HashMap<>();
+        SimpleDateFormat sdf = new SimpleDateFormat("YYYY-MM-DD HH:MM:SS");
+        sdf.setTimeZone(TimeZone.getTimeZone("GMT"));
+        List<SlotModal> slots = new ArrayList<>();
+        while (resultSet.next()) {
+            Timestamp startTime = resultSet.getTimestamp("start_time");
+            Timestamp endTime = resultSet.getTimestamp("end_time");
+            String slotDate = sdf.format(new Date(startTime.getTime())).substring(0,10);
+            if(startTime.compareTo(new Timestamp(System.currentTimeMillis())) > 0) {
+                if(!slotsAvailable.containsKey(slotDate))
+                    slotsAvailable.put(slotDate, new ArrayList<>());
+                String start = sdf.format(startTime);
+                String end = sdf.format(endTime);
+                slots.add(new SlotModal(start.substring(11), end.substring(11)));
+            }
+            slotsAvailable.put(slotDate, slots);
+        }
+        return slotsAvailable;
+    }
+}

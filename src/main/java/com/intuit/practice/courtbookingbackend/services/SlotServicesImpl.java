@@ -1,29 +1,30 @@
 package com.intuit.practice.courtbookingbackend.services;
 
-import com.intuit.practice.courtbookingbackend.api.CourtApi;
+import com.intuit.practice.courtbookingbackend.api.SlotApi;
 import com.intuit.practice.courtbookingbackend.exception.QueryExecutionException;
-import com.intuit.practice.courtbookingbackend.model.Court;
+import com.intuit.practice.courtbookingbackend.model.SlotModal;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
 @Service
-public class CourtServicesImpl implements CourtServices {
+public class SlotServicesImpl implements SlotServices{
 
     @Autowired
-    private CourtApi courtApi;
+    private SlotApi slotsApi;
 
     @Override
-    public HashMap<String, HashMap<String, List<Court>>> getAllCourts() {
-        HashMap<String, HashMap<String, List<Court>>> cityCourts;
+    public HashMap<String, List<SlotModal>> getAvailableSlots(Integer courtId) {
+        HashMap<String, List<SlotModal>> slots;
         try {
-            cityCourts = courtApi.getCourtsByCity();
+            slots = slotsApi.getSlotByCourtId(courtId);
         }
         catch (Exception exception) {
             throw new QueryExecutionException("Error while fetching all registerd users");
         }
-        return cityCourts;
+        return slots;
     }
 }
