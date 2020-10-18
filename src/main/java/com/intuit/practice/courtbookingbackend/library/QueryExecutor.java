@@ -31,4 +31,18 @@ public class QueryExecutor {
         }
         return queryExecutorResponse;
     }
+
+    public QueryExecutorResponse executeUpdate(String jdbc_driver, String db_url, String username, String password, String query) throws SQLException {
+        QueryExecutorResponse queryExecutorResponse = new QueryExecutorResponse();
+        try {
+            Class.forName(jdbc_driver);
+            queryExecutorResponse.setConnection(DriverManager.getConnection(db_url, username, password));
+            queryExecutorResponse.setStatement((queryExecutorResponse.getConnection().createStatement()));
+            queryExecutorResponse.getStatement().executeUpdate(query);
+        }
+        catch (Exception exception) {
+            logger.error("Error while executing {} SQL query with the error message {}", query, exception.getMessage());
+        }
+        return queryExecutorResponse;
+    }
 }
