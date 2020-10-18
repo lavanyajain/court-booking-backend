@@ -26,6 +26,7 @@ insert into court(court_id, name, city, game, min_cost, max_cost) values (null, 
 
 --insert initial data to slots
 
-insert into slots(slot_id, court_id, start_time, end_time) values (null , 1, '2020-12-18 13:17:17', '2020-12-18 13:17:17');
-insert into slots(slot_id, court_id, start_time, end_time, status) values (null , 1, '2020-11-18 13:17:17', '2020-11-18 13:17:17', 'Not Available');
+insert into slots(slot_id, court_id, start_time, end_time, status) values (null , 1, '2020-10-19 05:00:00', '2020-10-19 06:00:00', 'Available');
+insert into slots(slot_id, court_id, start_time, end_time, status) values (null , 1, '2020-10-20 05:00:00', '2020-10-20 06:00:00', 'Available');
+insert into slots(slot_id, court_id, start_time, end_time, status) values (null , 1, '2020-10-19 07:00:00', '2020-10-19 08:00:00', 'Not Available');
 
