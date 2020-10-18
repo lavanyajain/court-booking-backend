@@ -1,6 +1,7 @@
 package com.intuit.practice.courtbookingbackend.model;
 
 public class BookingResponse {
+
     public BookingResponse() {}
 
     public BookingResponse(String status, String message, Integer bookingId, SlotModal slotModal, User user, Integer courtId) {

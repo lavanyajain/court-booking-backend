@@ -22,7 +22,6 @@ import java.util.List;
 @RestController
 @RequestMapping("/api")
 public class SlotController {
-
     private static final Logger logger = LoggerFactory.getLogger(SlotController.class);
 
     @Autowired

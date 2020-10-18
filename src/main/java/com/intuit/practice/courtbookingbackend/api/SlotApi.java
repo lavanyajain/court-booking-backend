@@ -15,7 +15,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Time;
 import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
+
 import java.util.*;
 
 @Component
@@ -34,7 +34,7 @@ public class SlotApi {
 
     private static final Logger logger = LoggerFactory.getLogger(SlotApi.class);
 
-    private QueryExecutor queryExecutor = new QueryExecutor();
+    private final QueryExecutor queryExecutor = new QueryExecutor();
 
     private ResultSet getAllAvailableSlots(Integer courtId) {
         String sqlQuery = "select * from slots where court_id=" + courtId + " AND status='Available';";
@@ -56,8 +56,6 @@ public class SlotApi {
     public HashMap<String, List<SlotModal>> getSlotByCourtId(Integer courtId) throws SQLException {
         ResultSet resultSet = getAllAvailableSlots(courtId);
         HashMap<String, List<SlotModal>> slotsAvailable = new HashMap<>();
-        SimpleDateFormat sdf = new SimpleDateFormat("YYYY-MM-DD HH:MM:SS");
-        sdf.setTimeZone(TimeZone.getTimeZone("GMT"));
         List<SlotModal> slots = new ArrayList<>();
         while (resultSet.next()) {
             Timestamp startTime = resultSet.getTimestamp("start_time");

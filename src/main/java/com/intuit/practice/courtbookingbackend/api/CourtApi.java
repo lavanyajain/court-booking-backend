@@ -30,9 +30,9 @@ public class CourtApi {
     @Value("${court.booking.database.password}")
     private String PASSWORD;
 
-    private static final Logger logger = LoggerFactory.getLogger(UserApi.class);
+    private static final Logger logger = LoggerFactory.getLogger(CourtApi.class);
 
-    private QueryExecutor queryExecutor = new QueryExecutor();
+    private final QueryExecutor queryExecutor = new QueryExecutor();
 
     private ResultSet getEntriesOfCourtTable() {
         String sqlQuery = "select * from court";
@@ -54,7 +54,6 @@ public class CourtApi {
     public HashMap<String,HashMap<String, List<Court>>> getCourtsByCity() throws SQLException {
         String city, game;
         Court court;
-        List<Court> courtList = new ArrayList<>();
         ResultSet resultSet = getEntriesOfCourtTable();
         HashMap<String, HashMap<String, List<Court>>> courts = new HashMap<>();
         while (resultSet.next()) {
@@ -73,7 +72,6 @@ public class CourtApi {
             c.add(court);
             courtsEntry.put(game, c);
             courts.put(city, courtsEntry);
-            courtList.add(court);
         }
     return courts;
     }

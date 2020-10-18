@@ -20,7 +20,7 @@ public class BookingServicesImpl implements BookingServices {
             bookingResponse = bookingApi.bookCourt(bookingRequest);
         }
         catch (Exception exception) {
-            throw new QueryExecutionException("Error while fetching all registerd users");
+            throw new QueryExecutionException("Error while fetching all registered users");
         }
         return bookingResponse;
     }

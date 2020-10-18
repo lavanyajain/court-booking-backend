@@ -3,6 +3,7 @@ package com.intuit.practice.courtbookingbackend.services;
 import com.intuit.practice.courtbookingbackend.api.CourtApi;
 import com.intuit.practice.courtbookingbackend.exception.QueryExecutionException;
 import com.intuit.practice.courtbookingbackend.model.Court;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,7 +23,7 @@ public class CourtServicesImpl implements CourtServices {
             cityCourts = courtApi.getCourtsByCity();
         }
         catch (Exception exception) {
-            throw new QueryExecutionException("Error while fetching all registerd users");
+            throw new QueryExecutionException("Error while fetching all registered users");
         }
         return cityCourts;
     }
