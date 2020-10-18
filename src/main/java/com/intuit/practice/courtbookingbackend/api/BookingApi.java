@@ -3,25 +3,18 @@ package com.intuit.practice.courtbookingbackend.api;
 import com.intuit.practice.courtbookingbackend.exception.GetCourtsFailedException;
 import com.intuit.practice.courtbookingbackend.exception.QueryExecutionException;
 import com.intuit.practice.courtbookingbackend.exception.UserNotRegisteredException;
-import com.intuit.practice.courtbookingbackend.exception.UserRegistrationException;
 import com.intuit.practice.courtbookingbackend.library.QueryExecutor;
 import com.intuit.practice.courtbookingbackend.model.*;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
-import org.springframework.web.bind.annotation.RequestBody;
 
-import java.awt.print.Book;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Time;
 import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 
 import static com.intuit.practice.courtbookingbackend.config.ConfigurationData.FAILURE_STATUS;
 import static com.intuit.practice.courtbookingbackend.config.ConfigurationData.SUCCESS_STATUS;
@@ -42,13 +35,12 @@ public class BookingApi {
 
     private static final Logger logger = LoggerFactory.getLogger(BookingApi.class);
 
-    private QueryExecutor queryExecutor = new QueryExecutor();
+    private final QueryExecutor queryExecutor = new QueryExecutor();
 
     private QueryExecutorResponse queryExecutorResponse;
 
     private ResultSet getAllUsersFromTable() {
         String sqlQuery = "select * from user";
-
         try {
             queryExecutorResponse = queryExecutor.executeQuery(JDBC_DRIVER, DB_URL, USER_NAME, PASSWORD, sqlQuery);
         }
@@ -77,16 +69,12 @@ public class BookingApi {
         return users;
     }
 
-    private boolean isUserRegistered(HashMap<String, User> users, String email) throws SQLException {
-        if(users.containsKey(email))
-            return true;
-        else
-            return false;
+    private boolean isUserRegistered(HashMap<String, User> users, String email) {
+        return users.containsKey(email);
     }
 
-    private ResultSet getAvailableSlots(Integer courtId) throws SQLException {
+    private ResultSet getAvailableSlots(Integer courtId) {
         String sqlQuery = "select * from slots where court_id=" + courtId + " AND status='Available';";
-        List<SlotModal> slots = new ArrayList<>();
         try {
             queryExecutorResponse = queryExecutor.executeQuery(JDBC_DRIVER, DB_URL, USER_NAME, PASSWORD, sqlQuery);
         }

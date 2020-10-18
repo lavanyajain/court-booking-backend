@@ -7,6 +7,8 @@ import com.intuit.practice.courtbookingbackend.services.CourtServices;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,11 +28,11 @@ public class CourtsController {
     private CourtServices services;
 
     @GetMapping(value = "/courts", produces = "application/json")
-    public HashMap<String, HashMap<String, List<Court>>> getAllCourts() {
-        HashMap<String, HashMap<String, List<Court>>> cityCourts = null;
+    public ResponseEntity<HashMap<String, HashMap<String, List<Court>>>> getAllCourts() {
+        HashMap<String, HashMap<String, List<Court>>> cityCourts;
         try {
             cityCourts = services.getAllCourts();
-            return cityCourts;
+            return new ResponseEntity<>(cityCourts, HttpStatus.OK);
         }
         catch (Exception exception) {
             logger.error("Error while fetching all registered users list with error {}", exception.getMessage());

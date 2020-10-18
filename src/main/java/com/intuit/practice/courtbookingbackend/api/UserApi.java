@@ -1,20 +1,17 @@
 package com.intuit.practice.courtbookingbackend.api;
 
-import com.intuit.practice.courtbookingbackend.exception.GetUsersFailedException;
-import com.intuit.practice.courtbookingbackend.exception.UserNotFoundException;
 import com.intuit.practice.courtbookingbackend.exception.UserRegistrationException;
 import com.intuit.practice.courtbookingbackend.library.QueryExecutor;
 import com.intuit.practice.courtbookingbackend.model.QueryExecutorResponse;
 import com.intuit.practice.courtbookingbackend.model.User;
 import com.intuit.practice.courtbookingbackend.model.UserResponse;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
 
 import static com.intuit.practice.courtbookingbackend.config.ConfigurationData.SUCCESS_STATUS;
 

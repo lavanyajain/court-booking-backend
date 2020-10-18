@@ -4,6 +4,7 @@ import com.intuit.practice.courtbookingbackend.exception.UserRegistrationExcepti
 import com.intuit.practice.courtbookingbackend.model.User;
 import com.intuit.practice.courtbookingbackend.model.UserResponse;
 import com.intuit.practice.courtbookingbackend.services.UserServices;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,8 +12,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-
-import static com.intuit.practice.courtbookingbackend.config.ConfigurationData.FAILURE_STATUS;
 
 @Controller
 @RestController
