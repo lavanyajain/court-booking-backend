@@ -90,7 +90,7 @@ public class BookingApi {
     }
 
     private BookingResponse markSlotAsBooked(Integer slotId, BookingRequest bookingRequest, User user) {
-        String sqlQuery = "UPDATE slots SET status='Not Available' WHERE slot_id=" + slotId + ";";
+        String sqlQuery = "UPDATE slots SET status='Not Available', user_id=" + user.getUserId() + " WHERE slot_id=" + slotId + ";";
         try {
             queryExecutor.executeUpdate(JDBC_DRIVER, DB_URL, USER_NAME, PASSWORD, sqlQuery);
         }
