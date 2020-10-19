@@ -37,7 +37,6 @@ public class QueryExecutor {
             logger.error("Error while executing {} SQL query with the error message {}", query, exception.getMessage());
         }
         finally {
-            queryExecutorResponse.getResultSet().close();
             queryExecutorResponse.getStatement().close();
             queryExecutorResponse.getConnection().close();
         }
