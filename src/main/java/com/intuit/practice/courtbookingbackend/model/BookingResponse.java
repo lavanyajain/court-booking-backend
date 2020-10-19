@@ -4,13 +4,13 @@ public class BookingResponse {
 
     public BookingResponse() {}
 
-    public BookingResponse(String status, String message, Integer bookingId, SlotModal slotModal, User user, Integer courtId) {
+    public BookingResponse(String status, String message, Integer bookingId, SlotModal slotModal, User user, Integer court) {
         this.status = status;
         this.message = message;
         this.bookingId = bookingId;
         this.slotModal = slotModal;
-        this.courtId = courtId;
         this.user = user;
+        this.court = court;
     }
 
     private User user;
@@ -23,7 +23,15 @@ public class BookingResponse {
 
     private SlotModal slotModal;
 
-    private Integer courtId;
+    private Integer court;
+
+    public Integer getCourt() {
+        return court;
+    }
+
+    public void setCourt(Integer court) {
+        this.court = court;
+    }
 
     public User getUser() {
         return user;
@@ -31,14 +39,6 @@ public class BookingResponse {
 
     public void setUser(User user) {
         this.user = user;
-    }
-
-    public Integer getCourtId() {
-        return courtId;
-    }
-
-    public void setCourtId(Integer courtId) {
-        this.courtId = courtId;
     }
 
     public String getMessage() {
@@ -71,13 +71,5 @@ public class BookingResponse {
 
     public void setSlotModal(SlotModal slotModal) {
         this.slotModal = slotModal;
-    }
-
-    public Integer getCourt() {
-        return courtId;
-    }
-
-    public void setCourt(Court court) {
-        this.courtId = courtId;
     }
 }
