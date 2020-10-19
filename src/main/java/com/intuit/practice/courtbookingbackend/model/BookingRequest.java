@@ -5,6 +5,24 @@ public class BookingRequest {
     private Integer courtId;
     private String startTime;
     private String endTime;
+    private String phoneNumber;
+    private String fullName;
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public String getFullName() {
+        return fullName;
+    }
+
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
+    }
 
     public String getStartTime() {
         return startTime;

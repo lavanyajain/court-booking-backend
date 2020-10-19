@@ -8,6 +8,7 @@ import com.intuit.practice.courtbookingbackend.model.*;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -38,6 +39,9 @@ public class BookingApi {
     private final QueryExecutor queryExecutor = new QueryExecutor();
 
     private QueryExecutorResponse queryExecutorResponse;
+
+    @Autowired
+    private UserApi userApi;
 
     private ResultSet getAllUsersFromTable() {
         String sqlQuery = "select * from user";
@@ -121,9 +125,13 @@ public class BookingApi {
     }
 
     public BookingResponse bookCourt(BookingRequest bookingRequest) throws SQLException {
+        User user = new User(null, bookingRequest.getEmail(), bookingRequest.getFullName(), bookingRequest.getPhoneNumber());
+        Integer userId;
         HashMap<String, User> users = getAllUsers(getAllUsersFromTable());
         if(! isUserRegistered(users, bookingRequest.getEmail().toLowerCase())) {
-                throw new UserNotRegisteredException("User Not registered. Please register and try again to book a slot");
+                userId = userApi.registerUser(new User(null, bookingRequest.getEmail(), bookingRequest.getFullName(), bookingRequest.getPhoneNumber())).getUser().getUserId();
+                user.setUserId(userId);
+                users.put(bookingRequest.getEmail().toLowerCase(), user);
         }
         return bookSlotIfAvailable(getAvailableSlots(bookingRequest.getCourtId()), bookingRequest, users.get(bookingRequest.getEmail().toLowerCase()));
     }
