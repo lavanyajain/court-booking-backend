@@ -33,21 +33,43 @@ public class UserApi {
 
     private QueryExecutorResponse queryExecutorResponse;
 
+    private String sqlQuery = null;
+
+    private QueryExecutor queryExecutor = new QueryExecutor();
+
     public UserResponse registerUser(User user) throws SQLException {
-        String sqlQuery = null;
-        QueryExecutor queryExecutor = new QueryExecutor();
+
         try {
-            sqlQuery = "insert into user (user_id, email, full_name, phone_number) values (null, '" + user.getEmailId() + "', '" + user.getFullName() + "', '" + user.getPhoneNumber() + "');";
-            queryExecutorResponse = queryExecutor.executeQuery(JDBC_DRIVER, DB_URL, USER_NAME, PASSWORD, sqlQuery);
+            sqlQuery = "insert into user (email, full_name, phone_number) values ('" + user.getEmailId() + "', '" + user.getFullName() + "', '" + user.getPhoneNumber() + "');";
+            queryExecutor.executeUpdate(JDBC_DRIVER, DB_URL, USER_NAME, PASSWORD, sqlQuery);
         }
         catch (Exception exception) {
             logger.error("Error while executing {} SQL query with the error message {}", sqlQuery, exception.getMessage());
+            throw new UserRegistrationException(exception.getMessage());
+        }
+        Integer userId = fetchUserId(user.getEmailId());
+        user.setUserId(userId);
+        return new UserResponse(SUCCESS_STATUS, user);
+    }
+
+    private Integer fetchUserId(String email) throws SQLException {
+        Integer userId = null;
+        try {
+            sqlQuery = "select user_id from user where email='" + email + "'";
+            queryExecutorResponse = queryExecutor.executeQuery(JDBC_DRIVER, DB_URL, USER_NAME, PASSWORD, sqlQuery);
+            ResultSet resultSet = queryExecutorResponse.getResultSet();
+            while (resultSet.next()) {
+                userId = resultSet.getInt("user_id");
+            }
+        }
+        catch (Exception exception) {
+            logger.error("Error while fetching new registered user id");
             throw new UserRegistrationException(exception.getMessage());
         }
         finally {
             queryExecutorResponse.getConnection().close();
             queryExecutorResponse.getStatement().close();
         }
-        return new UserResponse(SUCCESS_STATUS, user);
+        return userId;
     }
 }

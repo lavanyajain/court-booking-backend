@@ -23,8 +23,8 @@ public class UserController {
     @Autowired
     private UserServices services;
 
-    @PostMapping(value = "/users", produces = "application/json")
-    public ResponseEntity<UserResponse> getAllUsers(@RequestBody User user) {
+    @PostMapping(value = "/user", produces = "application/json")
+    public ResponseEntity<UserResponse> registerUser(@RequestBody User user) {
         UserResponse usersResponse;
         try {
             usersResponse = services.registerUser(user);
