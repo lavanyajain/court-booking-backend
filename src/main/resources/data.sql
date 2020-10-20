@@ -17,7 +17,7 @@ create table user (
 );
 
 create table slots (
-    slot_id int not null  auto_increment,
+        slot_id int not null  auto_increment,
     court_id int not null,
     start_time datetime not null,
     end_time datetime not null,
