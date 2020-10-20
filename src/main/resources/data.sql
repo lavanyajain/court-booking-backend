@@ -28,13 +28,15 @@ create table slots (
     foreign key(user_id) references user(user_id)
 );
 
-
-
 --insert initial data to court
 
 insert into court(court_id, name, city, game, min_cost, max_cost) values (null, 'Play Mania', 'Bangalore', 'Badminton', 1000, 1200);
 insert into court(court_id, name, city, game, min_cost, max_cost) values (null, 'Playo', 'Bangalore', 'football', 700, 900);
-insert into court(court_id, name, city, game, min_cost, max_cost) values (null, 'PlayZooo', 'Delhi', 'Badminton', 500, 700);
+insert into court(court_id, name, city, game, min_cost, max_cost) values (null, 'Playoo', 'Mumbai', 'Badminton', 500, 700);
+insert into court(court_id, name, city, game, min_cost, max_cost) values (null, 'PlayZooo', 'Mumbai', 'football', 500, 700);
+insert into court(court_id, name, city, game, min_cost, max_cost) values (null, 'PlayZooo', 'Mysore', 'Badminton', 500, 700);
+insert into court(court_id, name, city, game, min_cost, max_cost) values (null, 'PlayZooo', 'Delhi', 'footBall', 500, 700);
+insert into court(court_id, name, city, game, min_cost, max_cost) values (null, 'PlayZooo', 'Mysore', 'Badminton', 500, 700);
 
 --insert initial date to user
 
@@ -46,5 +48,9 @@ insert into user (user_id, email, full_name, phone_number) values (null , 'foo.s
 
 insert into slots(slot_id, court_id, start_time, end_time, status) values (null , 1, '2020-10-19 05:00:00', '2020-10-19 06:00:00', 'Available');
 insert into slots(slot_id, court_id, start_time, end_time, status) values (null , 1, '2020-10-20 05:00:00', '2020-10-20 06:00:00', 'Available');
-insert into slots(slot_id, court_id, start_time, end_time, status, user_id) values (null , 1, '2020-10-19 07:00:00', '2020-10-19 08:00:00', 'Not Available', 3);
-
+insert into slots(slot_id, court_id, start_time, end_time, status, user_id) values (null , 1, '2020-10-22 07:00:00', '2020-10-22 08:00:00', 'Not Available', 1);
+insert into slots(slot_id, court_id, start_time, end_time, status) values (null , 1, '2020-10-22 08:00:00', '2020-10-22 09:00:00', 'Available');
+insert into slots(slot_id, court_id, start_time, end_time, status) values (null , 1, '2020-10-22 10:00:00', '2020-10-22 11:00:00', 'Available');
+insert into slots(slot_id, court_id, start_time, end_time, status) values (null , 2, '2020-10-23 07:00:00', '2020-10-23 08:00:00', 'Available');
+insert into slots(slot_id, court_id, start_time, end_time, status) values (null , 1, '2020-10-23 07:00:00', '2020-10-23 08:00:00', 'Available');
+insert into slots(slot_id, court_id, start_time, end_time, status) values (null , 3, '2020-10-25 07:00:00', '2020-10-25 08:00:00', 'Available');
