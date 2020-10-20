@@ -103,7 +103,7 @@ public class BookingApi {
             throw new QueryExecutionException(exception.getMessage());
         }
         String message = "Booked successfully";
-        return new BookingResponse(SUCCESS_STATUS, message, slotId, new SlotModal(bookingRequest.getStartTime(), bookingRequest.getEndTime()),user, bookingRequest.getCourtId());
+        return new BookingResponse(SUCCESS_STATUS, message, slotId, new SlotModal(bookingRequest.getStartTime(), bookingRequest.getEndTime(), "Not Available"),user, bookingRequest.getCourtId());
     }
 
     private BookingResponse bookSlotIfAvailable(ResultSet resultSet, BookingRequest bookingRequest, User user) throws SQLException {
@@ -119,7 +119,7 @@ public class BookingApi {
         }
         if(bookingResponse.getBookingId() == null) {
             String message = "Not slots are available in the given range, Please check available slots and try again";
-            return new BookingResponse(FAILURE_STATUS, message, null, new SlotModal(bookingRequest.getStartTime(), bookingRequest.getEndTime()),user, bookingRequest.getCourtId());
+            return new BookingResponse(FAILURE_STATUS, message, null, new SlotModal(bookingRequest.getStartTime(), bookingRequest.getEndTime(), "Not Available"),user, bookingRequest.getCourtId());
         }
         return bookingResponse;
     }

@@ -37,7 +37,7 @@ public class SlotApi {
     private final QueryExecutor queryExecutor = new QueryExecutor();
 
     private ResultSet getAllAvailableSlots(Integer courtId) {
-        String sqlQuery = "select * from slots where court_id=" + courtId + " AND status='Available';";
+        String sqlQuery = "select * from slots where court_id=" + courtId + ";";
         QueryExecutorResponse queryExecutorResponse;
         try {
             queryExecutorResponse = queryExecutor.executeQuery(JDBC_DRIVER, DB_URL, USER_NAME, PASSWORD, sqlQuery);
@@ -60,6 +60,7 @@ public class SlotApi {
         while (resultSet.next()) {
             Timestamp startTime = resultSet.getTimestamp("start_time");
             Timestamp endTime = resultSet.getTimestamp("end_time");
+            String status = resultSet.getString("status");
             String slotDate = new Date(startTime.getTime()).toString().substring(0,10);
             if(startTime.compareTo(new Timestamp(System.currentTimeMillis())) > 0) {
                 if(!slotsAvailable.containsKey(slotDate))
@@ -67,7 +68,7 @@ public class SlotApi {
                 slots = slotsAvailable.get(slotDate);
                 String start = new Time(startTime.getTime()).toString();
                 String end = new Time(endTime.getTime()).toString();
-                slots.add(new SlotModal(start, end));
+                slots.add(new SlotModal(start, end, status));
             }
             slotsAvailable.put(slotDate, slots);
         }
