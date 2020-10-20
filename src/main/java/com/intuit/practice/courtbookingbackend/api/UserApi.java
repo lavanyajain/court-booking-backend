@@ -52,7 +52,7 @@ public class UserApi {
         return new UserResponse(SUCCESS_STATUS, user);
     }
 
-    private Integer fetchUserId(String email) throws SQLException {
+    public Integer fetchUserId(String email) throws SQLException {
         Integer userId = null;
         try {
             sqlQuery = "select user_id from user where email='" + email + "'";
