@@ -59,7 +59,7 @@ public class BookingApi {
         return queryExecutorResponse.getResultSet();
     }
 
-    private HashMap<String, User> getAllUsers(ResultSet resultSet) throws SQLException {
+    public HashMap<String, User> getAllUsers(ResultSet resultSet) throws SQLException {
         HashMap<String, User> users = new HashMap<>();
         User user;
         while (resultSet.next()) {
@@ -106,7 +106,7 @@ public class BookingApi {
         return new BookingResponse(SUCCESS_STATUS, message, slotId, new SlotModal(bookingRequest.getStartTime(), bookingRequest.getEndTime(), "Not Available"),user, bookingRequest.getCourtId());
     }
 
-    private BookingResponse bookSlotIfAvailable(ResultSet resultSet, BookingRequest bookingRequest, User user) throws SQLException {
+    public BookingResponse bookSlotIfAvailable(ResultSet resultSet, BookingRequest bookingRequest, User user) throws SQLException {
         BookingResponse bookingResponse = new BookingResponse();
         while (resultSet.next()) {
             Timestamp startTime = resultSet.getTimestamp("start_time");

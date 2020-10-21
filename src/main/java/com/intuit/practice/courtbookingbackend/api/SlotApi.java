@@ -36,7 +36,7 @@ public class SlotApi {
 
     private final QueryExecutor queryExecutor = new QueryExecutor();
 
-    private ResultSet getAllAvailableSlots(Integer courtId) {
+    public ResultSet getAllAvailableSlots(Integer courtId) {
         String sqlQuery = "select * from slots where court_id=" + courtId + ";";
         QueryExecutorResponse queryExecutorResponse;
         try {

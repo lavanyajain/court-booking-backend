@@ -34,7 +34,7 @@ public class CourtApi {
 
     private final QueryExecutor queryExecutor = new QueryExecutor();
 
-    private ResultSet getEntriesOfCourtTable() {
+    public ResultSet getEntriesOfCourtTable() {
         String sqlQuery = "select * from court";
         QueryExecutorResponse queryExecutorResponse;
         try {

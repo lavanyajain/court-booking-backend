@@ -38,7 +38,6 @@ public class UserApi {
     private QueryExecutor queryExecutor = new QueryExecutor();
 
     public UserResponse registerUser(User user) throws SQLException {
-
         try {
             sqlQuery = "insert into user (email, full_name, phone_number) values ('" + user.getEmailId() + "', '" + user.getFullName() + "', '" + user.getPhoneNumber() + "');";
             queryExecutor.executeUpdate(JDBC_DRIVER, DB_URL, USER_NAME, PASSWORD, sqlQuery);
